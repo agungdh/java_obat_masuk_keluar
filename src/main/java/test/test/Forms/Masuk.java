@@ -600,9 +600,7 @@ public class Masuk extends javax.swing.JFrame {
 
     private void ButtonTambahUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonTambahUbahActionPerformed
         if (state.equals("index")) {
-            if (Keterangan.getText().trim().equals("")) {
-                JOptionPane.showMessageDialog(null, "Form Keterangan Masih Kosong !!!");
-            } else if (Tanggal.getDate() == null) {
+            if (Tanggal.getDate() == null) {
                 JOptionPane.showMessageDialog(null, "Form Tanggal Masih Kosong !!!");
             } else {
                 tambahData();
@@ -610,9 +608,7 @@ public class Masuk extends javax.swing.JFrame {
                 loadTable();
             }
         } else {
-            if (Keterangan.getText().trim().equals("")) {
-                JOptionPane.showMessageDialog(null, "Form Keterangan Masih Kosong !!!");
-            } else if (Tanggal.getDate() == null) {
+            if (Tanggal.getDate() == null) {
                 JOptionPane.showMessageDialog(null, "Form Tanggal Masih Kosong !!!");
             } else {
                 ubahData();
