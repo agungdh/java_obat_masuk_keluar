@@ -1,9 +1,9 @@
 -- mysqldump-php https://github.com/ifsnop/mysqldump-php
 --
--- Host: 127.0.0.1	Database: intan
+-- Host: 127.0.0.1	Database: dhea
 -- ------------------------------------------------------
 -- Server version 	5.5.5-10.3.16-MariaDB
--- Date: Mon, 26 Aug 2019 07:57:13 +0200
+-- Date: Mon, 26 Aug 2019 09:07:02 +0200
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -46,70 +46,96 @@ COMMIT;
 --
 
 --
--- Table structure for table `angsuran`
+-- Table structure for table `keluar`
 --
 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `angsuran` (
+CREATE TABLE `keluar` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_pembiayaan` int(11) NOT NULL,
-  `nama` varchar(191) NOT NULL,
+  `id_obat` int(11) NOT NULL,
   `tanggal` date NOT NULL,
-  `pokok` int(11) NOT NULL,
-  `basil` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=latin1;
+  `jumlah` int(11) NOT NULL,
+  `keterangan` varchar(191) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_obat` (`id_obat`),
+  CONSTRAINT `keluar_ibfk_1` FOREIGN KEY (`id_obat`) REFERENCES `obat` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `angsuran`
+-- Dumping data for table `keluar`
 --
 
-LOCK TABLES `angsuran` WRITE;
-/*!40000 ALTER TABLE `angsuran` DISABLE KEYS */;
+LOCK TABLES `keluar` WRITE;
+/*!40000 ALTER TABLE `keluar` DISABLE KEYS */;
 SET autocommit=0;
-INSERT INTO `angsuran` VALUES (2,1,'dfsadf','2019-08-09',124124,1241241240),(3,1,'dfsadf','2019-08-09',124124,1241241240),(4,1,'dfsadf','2019-08-09',124124,1241241240),(5,1,'dfsadf','2019-08-09',124124,1241241240),(6,1,'dfsadf','2019-08-09',124124,1241241240),(7,1,'dfsadf','2019-08-09',124124,1241241240),(8,1,'dfsadf','2019-08-09',124124,1241241240),(9,1,'dfsadf','2019-08-09',124124,1241241240),(10,1,'dfsadf','2019-08-09',124124,1241241240),(11,1,'dfsadf','2019-08-09',124124,1241241240),(12,1,'dfsadf','2019-08-09',124124,1241241240),(13,1,'dfsadf','2019-08-09',124124,1241241240),(14,1,'dfsadf','2019-08-09',124124,1241241240),(15,1,'dfsadf','2019-08-09',124124,1241241240),(16,1,'dfsadf','2019-08-09',124124,1241241240),(17,1,'dfsadf','2019-08-09',124124,1241241240),(18,1,'dfsadf','2019-08-09',124124,1241241240),(19,1,'dfsadf','2019-08-09',124124,1241241240),(20,1,'dfsadf','2019-08-09',124124,1241241240),(21,1,'dfsadf','2019-08-09',124124,1241241240),(22,1,'dfsadf','2019-08-09',124124,1241241240),(23,1,'dfsadf','2019-08-09',124124,1241241240),(24,1,'dfsadf','2019-08-09',124124,1241241240),(25,1,'dfsadf','2019-08-09',124124,1241241240),(26,1,'dfsadf','2019-08-09',124124,1241241240),(27,1,'dfsadf','2019-08-09',124124,1241241240),(28,1,'dfsadf','2019-08-09',124124,1241241240),(29,1,'dfsadf','2019-08-09',124124,1241241240),(30,1,'dfsadf','2019-08-09',124124,1241241240),(31,1,'dfsadf','2019-08-09',124124,1241241240),(32,1,'dfsadf','2019-08-09',124124,1241241240),(33,1,'dfsadf','2019-08-09',124124,1241241240),(34,1,'dfsadf','2019-08-09',124124,1241241240),(35,1,'dfsadf','2019-08-09',124124,1241241240),(36,1,'dfsadf','2019-08-09',124124,1241241240),(37,1,'dfsadf','2019-08-09',124124,1241241240),(38,1,'dfsadf','2019-08-09',124124,1241241240),(39,1,'dfsadf','2019-08-09',124124,1241241240),(40,1,'dfsadf','2019-08-09',124124,1241241240),(41,1,'dfsadf','2019-08-09',124124,1241241240),(42,1,'dfsadf','2019-08-09',124124,1241241240),(43,1,'dfsadf','2019-08-09',124124,1241241240),(44,1,'dfsadf','2019-08-09',124124,1241241240),(45,1,'dfsadf','2019-08-09',124124,1241241240),(46,1,'dfsadf','2019-08-09',124124,1241241240),(47,1,'dfsadf','2019-08-09',124124,1241241240),(48,1,'dfsadf','2019-08-09',124124,1241241240),(49,1,'dfsadf','2019-08-09',124124,1241241240),(50,1,'dfsadf','2019-08-09',124124,1241241240),(51,1,'dfsadf','2019-08-09',124124,1241241240),(52,1,'dfsadf','2019-08-09',124124,1241241240),(53,1,'dfsadf','2019-08-09',124124,1241241240),(54,1,'dfsadf','2019-08-09',124124,1241241240),(55,1,'dfsadf','2019-08-09',124124,1241241240),(56,1,'dfsadf','2019-08-09',124124,1241241240),(57,1,'dfsadf','2019-08-09',124124,1241241240),(58,1,'dfsadf','2019-08-09',124124,1241241240),(59,1,'dfsadf','2019-08-09',124124,1241241240),(60,1,'dfsadf','2019-08-09',124124,1241241240),(61,1,'dfsadf','2019-08-09',124124,1241241240),(62,1,'dfsadf','2019-08-09',124124,1241241240),(63,1,'dfsadf','2019-08-09',124124,1241241240),(64,1,'dfsadf','2019-08-09',124124,1241241240),(65,1,'dfsadf','2019-08-09',124124,1241241240),(66,1,'dfsadf','2019-08-09',124124,1241241240),(67,1,'dfsadf','2019-08-09',124124,1241241240),(68,1,'dfsadf','2019-08-09',124124,1241241240),(69,1,'dfsadf','2019-08-09',124124,1241241240),(70,1,'dfsadf','2019-08-09',124124,1241241240),(71,1,'dfsadf','2019-08-09',124124,1241241240),(72,1,'dfsadf','2019-08-09',124124,1241241240),(73,1,'dfsadf','2019-08-09',124124,1241241240),(74,1,'dfsadf','2019-08-09',124124,1241241240),(75,1,'dfsadf','2019-08-09',124124,1241241240),(76,1,'dfsadf','2019-08-09',124124,1241241240),(77,1,'dfsadf','2019-08-09',124124,1241241240),(78,1,'dfsadf','2019-08-09',124124,1241241240),(79,1,'dfsadf','2019-08-09',124124,1241241240),(80,1,'dfsadf','2019-08-09',124124,1241241240),(81,1,'dfsadf','2019-08-09',124124,1241241240),(82,1,'dfsadf','2019-08-09',124124,1241241240),(83,1,'dfsadf','2019-08-09',124124,1241241240),(84,1,'dfsadf','2019-08-09',124124,1241241240),(85,1,'dfsadf','2019-08-09',124124,1241241240),(86,1,'dfsadf','2019-08-09',124124,1241241240),(87,1,'dfsadf','2019-08-09',124124,1241241240),(88,1,'dfsadf','2019-08-09',124124,1241241240),(89,1,'dfsadf','2019-08-09',124124,1241241240),(90,1,'dfsadf','2019-08-09',124124,1241241240),(91,1,'dfsadf','2019-08-09',124124,1241241240),(92,1,'dfsadf','2019-08-09',124124,1241241240),(93,1,'dfsadf','2019-08-09',124124,1241241240),(94,1,'dfsadf','2019-08-09',124124,1241241240),(95,1,'dfsadf','2019-08-09',124124,1241241240),(96,1,'dfsadf','2019-08-09',124124,1241241240),(97,1,'dfsadf','2019-08-09',124124,1241241240),(98,1,'dfsadf','2019-08-09',124124,1241241240),(99,1,'dfsadf','2019-08-09',124124,1241241240),(100,1,'dfsadf','2019-08-09',124124,1241241240),(101,1,'dfsadf','2019-08-09',124124,1241241240),(102,1,'dfsadf','2019-08-09',124124,1241241240),(103,1,'dfsadf','2019-08-09',124124,1241241240),(104,1,'dfsadf','2019-08-09',124124,1241241240),(105,1,'dfsadf','2019-08-09',124124,1241241240),(106,1,'dfsadf','2019-08-09',124124,1241241240),(107,1,'dfsadf','2019-08-09',124124,1241241240),(108,1,'dfsadf','2019-08-09',124124,1241241240),(109,1,'dfsadf','2019-08-09',124124,1241241240),(110,1,'dfsadf','2019-08-09',124124,1241241240),(111,1,'dfsadf','2019-08-09',124124,1241241240),(112,1,'dfsadf','2019-08-09',124124,1241241240),(113,1,'dfsadf','2019-08-09',124124,1241241240),(114,1,'dfsadf','2019-08-09',124124,1241241240),(115,1,'dfsadf','2019-08-09',124124,1241241240),(116,1,'dfsadf','2019-08-09',124124,1241241240);
-/*!40000 ALTER TABLE `angsuran` ENABLE KEYS */;
+/*!40000 ALTER TABLE `keluar` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `angsuran` with 115 row(s)
+-- Dumped table `keluar` with 0 row(s)
 --
 
 --
--- Table structure for table `pembiayaan`
+-- Table structure for table `masuk`
 --
 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pembiayaan` (
+CREATE TABLE `masuk` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `no_pembiayaan` varchar(191) NOT NULL,
-  `nama` varchar(191) NOT NULL,
+  `id_obat` int(11) NOT NULL,
   `tanggal` date NOT NULL,
-  `plafon` int(11) NOT NULL,
-  `jatuh_tempo` date NOT NULL,
-  `basil` int(11) NOT NULL,
-  `pokok` int(11) NOT NULL,
-  `administrasi` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+  `jumlah` int(11) NOT NULL,
+  `keterangan` varchar(191) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_obat` (`id_obat`),
+  CONSTRAINT `masuk_ibfk_1` FOREIGN KEY (`id_obat`) REFERENCES `obat` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `pembiayaan`
+-- Dumping data for table `masuk`
 --
 
-LOCK TABLES `pembiayaan` WRITE;
-/*!40000 ALTER TABLE `pembiayaan` DISABLE KEYS */;
+LOCK TABLES `masuk` WRITE;
+/*!40000 ALTER TABLE `masuk` DISABLE KEYS */;
 SET autocommit=0;
-INSERT INTO `pembiayaan` VALUES (1,'111','Test 1','2019-08-01',1000000,'2020-08-03',2000000,3000000,4000000),(2,'1112','Test 12','2019-02-01',1000000,'2020-09-03',2000000,3000000,4000000);
-/*!40000 ALTER TABLE `pembiayaan` ENABLE KEYS */;
+/*!40000 ALTER TABLE `masuk` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `pembiayaan` with 2 row(s)
+-- Dumped table `masuk` with 0 row(s)
+--
+
+--
+-- Table structure for table `obat`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `obat` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nama` varchar(191) NOT NULL,
+  `jenis` varchar(191) NOT NULL,
+  `stok` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `obat`
+--
+
+LOCK TABLES `obat` WRITE;
+/*!40000 ALTER TABLE `obat` DISABLE KEYS */;
+SET autocommit=0;
+/*!40000 ALTER TABLE `obat` ENABLE KEYS */;
+UNLOCK TABLES;
+COMMIT;
+
+-- Dumped table `obat` with 0 row(s)
 --
 
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -121,4 +147,4 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on: Mon, 26 Aug 2019 07:57:13 +0200
+-- Dump completed on: Mon, 26 Aug 2019 09:07:02 +0200
