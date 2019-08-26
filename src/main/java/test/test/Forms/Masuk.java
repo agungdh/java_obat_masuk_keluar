@@ -468,6 +468,8 @@ public class Masuk extends javax.swing.JFrame {
 
         jLabel8.setText("Keterangan");
 
+        Tanggal.setDateFormatString("dd-MM-yyyy");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -564,17 +566,17 @@ public class Masuk extends javax.swing.JFrame {
             ID = model.getValueAt(i, 0).toString();
 
             Base.open();
-            ObatModel obat = ObatModel.findById(ID);
+            MasukModel masuk = MasukModel.findById(ID);
             Base.close();
 
-            Obat.setSelectedIndex(comboObatID.indexOf(Integer.parseInt(obat.getString("id_obat"))));
+            Obat.setSelectedIndex(comboObatID.indexOf(Integer.parseInt(masuk.getString("id_obat"))));
             try {
-                Tanggal.setDate(ADHhelper.getTanggalFromDB(obat.getString("tanggal")));
+                Tanggal.setDate(ADHhelper.getTanggalFromDB(masuk.getString("tanggal")));
             } catch (ParseException ex) {
                 Logger.getLogger(Angsuran.class.getName()).log(Level.SEVERE, null, ex);
             }
-            Jumlah.setValue(obat.getInteger("jumlah"));
-            Keterangan.setText(obat.getString("keterangan"));
+            Jumlah.setValue(masuk.getInteger("jumlah"));
+            Keterangan.setText(masuk.getString("keterangan"));
             
             setState("edit");
         }
