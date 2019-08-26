@@ -1,0 +1,10 @@
+{
+	"require": {
+		"php": ">=7.3.0",
+		"agungdh/pustaka": "^1.0",
+		"vlucas/phpdotenv": "^3.3",
+		"splitbrain/php-cli": "^1.1",
+		"ifsnop/mysqldump-php": "^2.7",
+		"thamaraiselvam/mysql-import": "^1.0"
+	}
+}

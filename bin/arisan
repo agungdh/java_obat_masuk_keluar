@@ -1,0 +1,88 @@
+<?php
+require_once('vendor/autoload.php');
+
+use splitbrain\phpcli\CLI;
+use splitbrain\phpcli\Options;
+use Ifsnop\Mysqldump as IMysqldump;
+use Thamaraiselvam\MysqlImport\Import;
+use agungdh\Pustaka;
+
+class arisan extends CLI
+{
+    protected function setup(Options $options)
+    {
+        $options->setHelp('Laravel artisan like. but this is "arisan".');
+        $options->registerOption('version', 'print version.', 'v');
+        $options->registerOption('dumpdb', 'Dump the Database.', 'd');
+        $options->registerOption('importdb', 'Import Database with SQL Syntax. Run the db.sql file.', 'i');
+    }
+
+    protected function main(Options $options)
+    {
+        if ($options->getOpt('version'))
+        {
+            $this->info('1.0.0');
+        }
+
+        elseif ($options->getOpt('dumpdb'))
+        {
+            $this->notice("Preparing ...\n");
+            $database = getenv('DB_DB');
+            $user = getenv('DB_USER');
+            $pass = getenv('DB_PASS');
+            $host = getenv('DB_HOST');
+         
+            $this->info(
+                "Host\t\t: " . $host . "\n" . 
+                "Database\t: " . $database . "\n" . 
+                "Username\t: " . $user . "\n" . 
+                "Password\t: " . $pass . "\n"
+            );
+
+            $path = './db.sql';
+            $this->notice("Set dumping path to " . $path . "\n");
+            
+            $this->notice("Dumping the database\n");
+            try {
+                $dump = new IMysqldump\Mysqldump("mysql:host={$host};dbname={$database}", "{$user}", "{$pass}");
+
+                $dump->start($path);
+
+                $this->info("Done ...");
+            } catch (\Exception $e) {
+                $this->notice("An error occurred !!!");
+                $this->error($e->getMessage());
+            }
+        }
+        
+        elseif ($options->getOpt('importdb'))
+        {
+            $this->info("Preparing ...\n");
+            $database = getenv('DB_DB');
+            $user = getenv('DB_USER');
+            $pass = getenv('DB_PASS');
+            $host = getenv('DB_HOST');
+
+            $this->info("Drop all tables");
+            Pustaka::dropTableView($host, $user, $pass, $database);
+
+            $location = './db.sql';
+            $this->info("Importing Database");
+
+            new Import($location, $user, $pass, $database, $host);
+            
+            $this->info("Done ...");
+        }
+
+        else
+        {
+            echo $options->help();
+        }
+    }
+}
+
+$dotenv = Dotenv\Dotenv::create(__DIR__);
+$dotenv->load();
+
+$cli = new arisan();
+$cli->run();
