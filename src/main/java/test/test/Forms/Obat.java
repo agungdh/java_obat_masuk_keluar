@@ -43,21 +43,21 @@ import test.test.Models.JabatanModel;
 
 import test.test.Models.GajiModel;
 import test.test.Models.KaryawanModel;
-import test.test.Models.PembiayaanModel;
+import test.test.Models.ObatModel;
 import test.test.Reports.Config;
 
 /**
  *
  * @author user
  */
-public class Pembiayaan extends javax.swing.JFrame {
+public class Obat extends javax.swing.JFrame {
     private DefaultTableModel model = new DefaultTableModel();
     private String ID;
     private String state;
     /**
      * Creates new form PangkatGol
      */
-    public Pembiayaan() {
+    public Obat() {
         initComponents();
                 
         loadTable();
@@ -88,33 +88,23 @@ public class Pembiayaan extends javax.swing.JFrame {
         }
     }
     
-    private void loadTableHelper(LazyList<PembiayaanModel> pembiayaans) {
+    private void loadTableHelper(LazyList<ObatModel> obats) {
         model = new DefaultTableModel();
                 
         model.addColumn("#ID");
-        model.addColumn("No Pembiayaan");
-        model.addColumn("Nama");
-        model.addColumn("Tanggal");
-        model.addColumn("Plafon");
-        model.addColumn("Jatuh Tempo");
-        model.addColumn("Bagi Hasil");
-        model.addColumn("Pokok");
-        model.addColumn("Administrasi");
+        model.addColumn("Nama Obat");
+        model.addColumn("Jenis Obat");
+        model.addColumn("Stok Obat");
         
         Base.open();
         
         try {
-            for(PembiayaanModel pembiayaan : pembiayaans) {                
+            for(ObatModel obat : obats) {                
                 model.addRow(new Object[]{
-                    pembiayaan.getId(),
-                    pembiayaan.getString("no_pembiayaan"),
-                    pembiayaan.getString("nama"),
-                    ADHhelper.tanggalIndo(pembiayaan.getString("tanggal")),
-                    ADHhelper.rupiah(pembiayaan.getInteger("plafon")),
-                    ADHhelper.tanggalIndo(pembiayaan.getString("jatuh_tempo")),
-                    ADHhelper.rupiah(pembiayaan.getInteger("basil")),
-                    ADHhelper.rupiah(pembiayaan.getInteger("pokok")),
-                    ADHhelper.rupiah(pembiayaan.getInteger("administrasi"))
+                    obat.getId(),
+                    obat.getString("nama"),
+                    obat.getString("jenis"),
+                    obat.getString("stok"),
                 });
             }
         } catch (Exception e) {
@@ -133,24 +123,24 @@ public class Pembiayaan extends javax.swing.JFrame {
     
     private void loadTable() {
         Base.open();
-        LazyList<PembiayaanModel> pembiayaans = PembiayaanModel.findAll();
+        LazyList<ObatModel> obats = ObatModel.findAll();
         Base.close();
         
-        loadTableHelper(pembiayaans);
+        loadTableHelper(obats);
     }
 
     private void loadTable(String cari) {
         Base.open();
-        LazyList<PembiayaanModel> pembiayaans = PembiayaanModel.where("no_pembiayaan like ? OR nama like ?", '%' + cari + '%', '%' + cari + '%');
+        LazyList<ObatModel> obats = ObatModel.where("nama like ? OR jenis like ?", '%' + cari + '%', '%' + cari + '%');
         Base.close();
         
-        loadTableHelper(pembiayaans);
+        loadTableHelper(obats);
     }
 
     
     private void hapusData() {
         Base.open();
-        PembiayaanModel pembiayaa = PembiayaanModel.findById(ID);
+        ObatModel pembiayaa = ObatModel.findById(ID);
         try {
             pembiayaa.delete();
         } catch (DBException e) {
@@ -178,16 +168,11 @@ public class Pembiayaan extends javax.swing.JFrame {
     private void tambahData() {
         Base.open();
         try {
-            PembiayaanModel pembiayaan = new PembiayaanModel();
-            pembiayaan.set("no_pembiayaan", No.getText());
-            pembiayaan.set("nama", Nama.getText());
-            pembiayaan.set("tanggal", ADHhelper.parseTanggal(Tanggal.getDate()));
-            pembiayaan.set("plafon", Plafon.getValue());
-            pembiayaan.set("jatuh_tempo", ADHhelper.parseTanggal(Jatuh.getDate()));
-            pembiayaan.set("basil", Bagi.getValue());
-            pembiayaan.set("pokok", Pokok.getValue());
-            pembiayaan.set("administrasi", Adm.getValue());
-            pembiayaan.save();
+            ObatModel obat = new ObatModel();
+            obat.set("nama", Nama.getText());
+            obat.set("jenis", Jenis.getText());
+            obat.set("stok", Stok.getValue());
+            obat.save();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
@@ -197,16 +182,11 @@ public class Pembiayaan extends javax.swing.JFrame {
     private void ubahData() {
         Base.open();
         try {
-            PembiayaanModel pembiayaan = PembiayaanModel.findById(ID);
-            pembiayaan.set("no_pembiayaan", No.getText());
-            pembiayaan.set("nama", Nama.getText());
-            pembiayaan.set("tanggal", ADHhelper.parseTanggal(Tanggal.getDate()));
-            pembiayaan.set("plafon", Plafon.getValue());
-            pembiayaan.set("jatuh_tempo", ADHhelper.parseTanggal(Jatuh.getDate()));
-            pembiayaan.set("basil", Bagi.getValue());
-            pembiayaan.set("pokok", Pokok.getValue());
-            pembiayaan.set("administrasi", Adm.getValue());
-            pembiayaan.save();
+            ObatModel obat = ObatModel.findById(ID);
+            obat.set("nama", Nama.getText());
+            obat.set("jenis", Jenis.getText());
+            obat.set("stok", Stok.getValue());
+            obat.save();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
@@ -214,14 +194,9 @@ public class Pembiayaan extends javax.swing.JFrame {
     }
 
     private void resetForm() {
-        No.setText("");
         Nama.setText("");
-        Plafon.setValue(0);
-        Bagi.setValue(0);
-        Pokok.setValue(0);
-        Adm.setValue(0);
-        Tanggal.setDate(null);
-        Jatuh.setDate(null);
+        Jenis.setText("");
+        Stok.setValue(0);
     }
 
     /**
@@ -237,7 +212,7 @@ public class Pembiayaan extends javax.swing.JFrame {
         TablePegawai = new javax.swing.JTable();
         TextCari = new javax.swing.JTextField();
         LabelCari = new javax.swing.JLabel();
-        No = new javax.swing.JTextField();
+        Nama = new javax.swing.JTextField();
         LabelCari1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -246,22 +221,12 @@ public class Pembiayaan extends javax.swing.JFrame {
         ButtonTambahUbah = new javax.swing.JButton();
         ButtonResetHapus = new javax.swing.JButton();
         LabelCari2 = new javax.swing.JLabel();
-        Nama = new javax.swing.JTextField();
-        LabelCari3 = new javax.swing.JLabel();
-        LabelCari4 = new javax.swing.JLabel();
-        LabelCari5 = new javax.swing.JLabel();
-        LabelCari6 = new javax.swing.JLabel();
-        LabelCari7 = new javax.swing.JLabel();
-        LabelCari8 = new javax.swing.JLabel();
-        Tanggal = new com.toedter.calendar.JDateChooser();
-        Bagi = new javax.swing.JSpinner();
-        Jatuh = new com.toedter.calendar.JDateChooser();
-        Plafon = new javax.swing.JSpinner();
-        Pokok = new javax.swing.JSpinner();
-        Adm = new javax.swing.JSpinner();
+        Jenis = new javax.swing.JTextField();
+        LabelCari9 = new javax.swing.JLabel();
+        Stok = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Pembiayaan");
+        setTitle("Obat");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -291,29 +256,29 @@ public class Pembiayaan extends javax.swing.JFrame {
             }
         });
 
-        LabelCari.setText("Cari (No/Nama)");
+        LabelCari.setText("Cari (Nama/Jenis)");
 
-        No.addActionListener(new java.awt.event.ActionListener() {
+        Nama.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NoActionPerformed(evt);
+                NamaActionPerformed(evt);
             }
         });
 
-        LabelCari1.setText("No Pembiayaan");
+        LabelCari1.setText("Nama Obat");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setText("PEMBIAYAAN");
+        jLabel1.setText("PERSEDIAAN OBAT");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(148, 148, 148)
                 .addComponent(jLabel1)
-                .addGap(538, 538, 538))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -351,13 +316,13 @@ public class Pembiayaan extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(ButtonTambahUbah)
-                .addGap(44, 44, 44)
+                .addGap(32, 32, 32)
                 .addComponent(ButtonRefresh)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(ButtonResetHapus)
-                .addContainerGap())
+                .addGap(150, 150, 150))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -370,29 +335,15 @@ public class Pembiayaan extends javax.swing.JFrame {
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
-        LabelCari2.setText("Nama");
+        LabelCari2.setText("Jenis Obat");
 
-        Nama.addActionListener(new java.awt.event.ActionListener() {
+        Jenis.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NamaActionPerformed(evt);
+                JenisActionPerformed(evt);
             }
         });
 
-        LabelCari3.setText("Tanggal");
-
-        LabelCari4.setText("Plafon");
-
-        LabelCari5.setText("Jatuh Tempo");
-
-        LabelCari6.setText("Bagi Hasil");
-
-        LabelCari7.setText("Pokok");
-
-        LabelCari8.setText("Administrasi");
-
-        Tanggal.setDateFormatString("dd-MM-yyyy");
-
-        Jatuh.setDateFormatString("dd-MM-yyyy");
+        LabelCari9.setText("Stok Obat");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -405,45 +356,24 @@ public class Pembiayaan extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(LabelCari8, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(Adm, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(LabelCari7, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(Pokok, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(LabelCari6, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(Bagi, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(LabelCari5, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(Jatuh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(LabelCari4, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(Plafon))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(LabelCari3, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(Tanggal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(LabelCari)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(TextCari))
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(LabelCari2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(Nama))
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(Jenis))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(LabelCari9, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(Stok))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(LabelCari1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(No)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(LabelCari, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(TextCari, javax.swing.GroupLayout.PREFERRED_SIZE, 894, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(ScrollPane))))
+                                .addComponent(Nama)))
+                        .addGap(0, 8, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -453,45 +383,24 @@ public class Pembiayaan extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TextCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LabelCari))
+                    .addComponent(LabelCari1)
+                    .addComponent(Nama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(LabelCari1)
-                            .addComponent(No, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(LabelCari2)
-                            .addComponent(Nama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(LabelCari3)
-                            .addComponent(Tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(LabelCari4)
-                            .addComponent(Plafon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(9, 9, 9)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(LabelCari5)
-                            .addComponent(Jatuh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(LabelCari6)
-                            .addComponent(Bagi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(LabelCari7)
-                            .addComponent(Pokok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(LabelCari8)
-                            .addComponent(Adm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(ScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LabelCari2)
+                    .addComponent(Jenis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(13, 13, 13)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Stok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LabelCari9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LabelCari)
+                    .addComponent(TextCari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(ScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -516,49 +425,32 @@ public class Pembiayaan extends javax.swing.JFrame {
             ID = model.getValueAt(i, 0).toString();
 
             Base.open();
-            PembiayaanModel pembiayaan = PembiayaanModel.findById(ID);
+            ObatModel obat = ObatModel.findById(ID);
             Base.close();
 
-            No.setText(pembiayaan.getString("no_pembiayaan"));
-            Nama.setText(pembiayaan.getString("nama"));
-            try {
-                Tanggal.setDate(ADHhelper.getTanggalFromDB(pembiayaan.getString("tanggal")));
-                Jatuh.setDate(ADHhelper.getTanggalFromDB(pembiayaan.getString("jatuh_tempo")));
-            } catch (ParseException ex) {
-                Logger.getLogger(Pembiayaan.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            Plafon.setValue(pembiayaan.getInteger("plafon"));
-            Bagi.setValue(pembiayaan.getInteger("basil"));
-            Pokok.setValue(pembiayaan.getInteger("pokok"));
-            Adm.setValue(pembiayaan.getInteger("administrasi"));
+            Nama.setText(obat.getString("nama"));
+            Jenis.setText(obat.getString("jenis"));
+            Stok.setValue(obat.getInteger("stok"));
             setState("edit");
         }
     }//GEN-LAST:event_TablePegawaiMouseClicked
 
     private void ButtonTambahUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonTambahUbahActionPerformed
         if (state.equals("index")) {
-            if (No.getText().trim().equals("")) {
-                JOptionPane.showMessageDialog(null, "Form No Pembiayaan Masih Kosong !!!");
-            } else if (Nama.getText().trim().equals("")) {
-                JOptionPane.showMessageDialog(null, "Form Nama Masih Kosong !!!");
-            } else if (Tanggal.getDate() == null) {
-                JOptionPane.showMessageDialog(null, "Form Tanggal Masih Kosong !!!");
-            } else if (Jatuh.getDate() == null) {
-                JOptionPane.showMessageDialog(null, "Form Jatuh Tempo Masih Kosong !!!");
+            if (Nama.getText().trim().equals("")) {
+                JOptionPane.showMessageDialog(null, "Form Nama Obat Masih Kosong !!!");
+            } else if (Jenis.getText().trim().equals("")) {
+                JOptionPane.showMessageDialog(null, "Form Jenis Obat Masih Kosong !!!");
             } else {
                 tambahData();
                 resetForm();
                 loadTable();
             }
         } else {
-            if (No.getText().trim().equals("")) {
-                JOptionPane.showMessageDialog(null, "Form No Pembiayaan Masih Kosong !!!");
-            } else if (Nama.getText().trim().equals("")) {
-                JOptionPane.showMessageDialog(null, "Form Nama Masih Kosong !!!");
-            } else if (Tanggal.getDate() == null) {
-                JOptionPane.showMessageDialog(null, "Form Tanggal Masih Kosong !!!");
-            } else if (Jatuh.getDate() == null) {
-                JOptionPane.showMessageDialog(null, "Form Jatuh Tempo Masih Kosong !!!");
+            if (Nama.getText().trim().equals("")) {
+                JOptionPane.showMessageDialog(null, "Form Nama Obat Pembiayaan Masih Kosong !!!");
+            } else if (Jenis.getText().trim().equals("")) {
+                JOptionPane.showMessageDialog(null, "Form Jenis Obat Masih Kosong !!!");
             } else {
                 ubahData();
                 resetForm();
@@ -580,13 +472,13 @@ public class Pembiayaan extends javax.swing.JFrame {
         cari();
     }//GEN-LAST:event_TextCariActionPerformed
 
-    private void NoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NoActionPerformed
-
     private void NamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NamaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_NamaActionPerformed
+
+    private void JenisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JenisActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JenisActionPerformed
 
     /**
      * @param args the command line arguments
@@ -605,14 +497,46 @@ public class Pembiayaan extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Pembiayaan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Obat.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Pembiayaan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Obat.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Pembiayaan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Obat.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Pembiayaan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Obat.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -649,34 +573,24 @@ public class Pembiayaan extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Pembiayaan().setVisible(true);
+                new Obat().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JSpinner Adm;
-    private javax.swing.JSpinner Bagi;
     private javax.swing.JButton ButtonRefresh;
     private javax.swing.JButton ButtonResetHapus;
     private javax.swing.JButton ButtonTambahUbah;
-    private com.toedter.calendar.JDateChooser Jatuh;
+    private javax.swing.JTextField Jenis;
     private javax.swing.JLabel LabelCari;
     private javax.swing.JLabel LabelCari1;
     private javax.swing.JLabel LabelCari2;
-    private javax.swing.JLabel LabelCari3;
-    private javax.swing.JLabel LabelCari4;
-    private javax.swing.JLabel LabelCari5;
-    private javax.swing.JLabel LabelCari6;
-    private javax.swing.JLabel LabelCari7;
-    private javax.swing.JLabel LabelCari8;
+    private javax.swing.JLabel LabelCari9;
     private javax.swing.JTextField Nama;
-    private javax.swing.JTextField No;
-    private javax.swing.JSpinner Plafon;
-    private javax.swing.JSpinner Pokok;
     private javax.swing.JScrollPane ScrollPane;
+    private javax.swing.JSpinner Stok;
     private javax.swing.JTable TablePegawai;
-    private com.toedter.calendar.JDateChooser Tanggal;
     private javax.swing.JTextField TextCari;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

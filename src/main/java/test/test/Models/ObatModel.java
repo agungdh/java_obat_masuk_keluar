@@ -13,5 +13,5 @@ import org.javalite.activejdbc.annotations.Table;
  *
  * @author user
  */
-@Table("pembiayaan")
-public class PembiayaanModel extends Model {}
+@Table("obat")
+public class ObatModel extends Model {}

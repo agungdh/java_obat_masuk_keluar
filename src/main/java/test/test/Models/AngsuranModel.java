@@ -14,5 +14,5 @@ import org.javalite.activejdbc.annotations.Table;
  * @author user
  */
 @Table("angsuran")
-@BelongsTo(parent = PembiayaanModel.class, foreignKeyName = "id_pembiayaan")
+@BelongsTo(parent = ObatModel.class, foreignKeyName = "id_pembiayaan")
 public class AngsuranModel extends Model {}

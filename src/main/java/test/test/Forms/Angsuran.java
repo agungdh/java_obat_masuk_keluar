@@ -44,7 +44,7 @@ import test.test.Models.JabatanModel;
 
 import test.test.Models.GajiModel;
 import test.test.Models.KaryawanModel;
-import test.test.Models.PembiayaanModel;
+import test.test.Models.ObatModel;
 import test.test.Reports.Config;
 
 /**
@@ -91,9 +91,9 @@ public class Angsuran extends javax.swing.JFrame {
         No.removeAllItems();
         
         Base.open();
-        LazyList<PembiayaanModel> pembiayaans = PembiayaanModel.findAll();
+        LazyList<ObatModel> pembiayaans = ObatModel.findAll();
         
-        for(PembiayaanModel pembiayaan : pembiayaans) {
+        for(ObatModel pembiayaan : pembiayaans) {
             comboPembiayaanID.add(Integer.parseInt(pembiayaan.getString("id")));
             No.addItem(pembiayaan.getString("no_pembiayaan"));
         }
@@ -123,7 +123,7 @@ public class Angsuran extends javax.swing.JFrame {
         
         try {
             for(AngsuranModel angsuran : angsurans) {       
-                PembiayaanModel pembiayaan = angsuran.parent(PembiayaanModel.class);
+                ObatModel pembiayaan = angsuran.parent(ObatModel.class);
                 model.addRow(new Object[]{
                     angsuran.getId(),
                     pembiayaan.getString("no_pembiayaan"),

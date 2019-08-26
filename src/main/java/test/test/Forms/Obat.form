@@ -3,7 +3,7 @@
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="title" type="java.lang.String" value="Pembiayaan"/>
+    <Property name="title" type="java.lang.String" value="Obat"/>
     <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
@@ -32,59 +32,32 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jPanel1" max="32767" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="LabelCari8" min="-2" pref="82" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="Adm" min="-2" pref="222" max="-2" attributes="0"/>
+                              <Component id="LabelCari" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="TextCari" max="32767" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="LabelCari7" min="-2" pref="82" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="Pokok" min="-2" pref="222" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="LabelCari6" min="-2" pref="82" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="Bagi" min="-2" pref="222" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="LabelCari5" min="-2" pref="82" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="Jatuh" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="LabelCari4" min="-2" pref="82" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="Plafon" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="LabelCari3" min="-2" pref="82" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="Tanggal" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
+                          <Component id="ScrollPane" alignment="0" pref="522" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="LabelCari2" min="-2" pref="82" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="Nama" max="32767" attributes="0"/>
+                              <Component id="Jenis" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="LabelCari9" min="-2" pref="82" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="Stok" max="32767" attributes="0"/>
+                          </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="LabelCari1" min="-2" pref="82" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="No" max="32767" attributes="0"/>
+                              <Component id="Nama" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="LabelCari" max="32767" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="TextCari" min="-2" pref="894" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="ScrollPane" max="32767" attributes="0"/>
-                      </Group>
+                      <EmptySpace min="0" pref="8" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -98,56 +71,28 @@
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="TextCari" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="LabelCari" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="LabelCari1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Nama" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="LabelCari1" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="No" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="LabelCari2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="Nama" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="LabelCari3" min="-2" max="-2" attributes="0"/>
-                          <Component id="Tanggal" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="LabelCari4" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="Plafon" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="LabelCari5" min="-2" max="-2" attributes="0"/>
-                          <Component id="Jatuh" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="LabelCari6" min="-2" max="-2" attributes="0"/>
-                          <Component id="Bagi" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="LabelCari7" min="-2" max="-2" attributes="0"/>
-                          <Component id="Pokok" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="LabelCari8" min="-2" max="-2" attributes="0"/>
-                          <Component id="Adm" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace pref="8" max="32767" attributes="0"/>
-                      <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="ScrollPane" pref="0" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="LabelCari2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Jenis" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
+              <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="Stok" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="LabelCari9" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="13" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="LabelCari" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="TextCari" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="ScrollPane" min="-2" pref="263" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -183,17 +128,17 @@
     </Component>
     <Component class="javax.swing.JLabel" name="LabelCari">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Cari (No/Nama)"/>
+        <Property name="text" type="java.lang.String" value="Cari (Nama/Jenis)"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="No">
+    <Component class="javax.swing.JTextField" name="Nama">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="NoActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="NamaActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="LabelCari1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="No Pembiayaan"/>
+        <Property name="text" type="java.lang.String" value="Nama Obat"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JPanel" name="jPanel1">
@@ -208,10 +153,10 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="148" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="538" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -231,7 +176,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="24" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="PEMBIAYAAN"/>
+            <Property name="text" type="java.lang.String" value="PERSEDIAAN OBAT"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -249,13 +194,13 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Component id="ButtonTambahUbah" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                   <Component id="ButtonRefresh" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="53" max="32767" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="ButtonResetHapus" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="150" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -302,61 +247,20 @@
     </Container>
     <Component class="javax.swing.JLabel" name="LabelCari2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Nama"/>
+        <Property name="text" type="java.lang.String" value="Jenis Obat"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="Nama">
+    <Component class="javax.swing.JTextField" name="Jenis">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="NamaActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JenisActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="LabelCari3">
+    <Component class="javax.swing.JLabel" name="LabelCari9">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Tanggal"/>
+        <Property name="text" type="java.lang.String" value="Stok Obat"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="LabelCari4">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Plafon"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="LabelCari5">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Jatuh Tempo"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="LabelCari6">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Bagi Hasil"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="LabelCari7">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Pokok"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="LabelCari8">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Administrasi"/>
-      </Properties>
-    </Component>
-    <Component class="com.toedter.calendar.JDateChooser" name="Tanggal">
-      <Properties>
-        <Property name="dateFormatString" type="java.lang.String" value="dd-MM-yyyy"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JSpinner" name="Bagi">
-    </Component>
-    <Component class="com.toedter.calendar.JDateChooser" name="Jatuh">
-      <Properties>
-        <Property name="dateFormatString" type="java.lang.String" value="dd-MM-yyyy"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JSpinner" name="Plafon">
-    </Component>
-    <Component class="javax.swing.JSpinner" name="Pokok">
-    </Component>
-    <Component class="javax.swing.JSpinner" name="Adm">
+    <Component class="javax.swing.JSpinner" name="Stok">
     </Component>
   </SubComponents>
 </Form>
