@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="laporan" language="groovy" pageWidth="529" pageHeight="595" orientation="Landscape" columnWidth="489" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="83af2b50-318f-4f0b-be55-db83171c0f1e">
+	<property name="ireport.zoom" value="1.1000000000000016"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT *
+FROM obat]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nama" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jenis" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="stok" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<title>
+		<band height="36" splitType="Stretch">
+			<staticText>
+				<reportElement x="178" y="0" width="145" height="20" uuid="56d37945-411e-4707-9be9-1010d22bf216"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LAPORAN STOK OBAT]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="19" height="20" uuid="dbcf1ed6-b8ed-41e2-9e31-3670dcd857af"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="19" height="20" uuid="c2e90c7d-740a-4223-980d-e84f648b5c08"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="19" y="0" width="152" height="20" uuid="1b6afd96-4637-44de-ab83-a1c47c2cd400"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="19" y="0" width="152" height="20" uuid="763aab4b-32ab-404e-8bb6-8ed348ef94e0"/>
+				<text><![CDATA[Nama]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="171" y="0" width="152" height="20" uuid="970a4755-0cc2-42f5-ae80-690a89ad4e9f"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="171" y="0" width="152" height="20" uuid="0dae1fd5-ed49-4e3f-9467-7faa3cd0d56b"/>
+				<text><![CDATA[Jenis]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="323" y="0" width="166" height="20" uuid="83f40285-360f-48c0-a6a9-dfbceca9d153"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="323" y="0" width="166" height="20" uuid="e0e71259-76d8-4e2f-bdf7-9257771713e6"/>
+				<text><![CDATA[Stok]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="19" height="20" uuid="d34db46d-a6a9-4a92-bc96-69bbb7ff941d"/>
+			</rectangle>
+			<textField>
+				<reportElement x="0" y="0" width="19" height="20" uuid="a51b59fd-30f6-49b6-a0e9-59b9e3b7e04e"/>
+				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="19" y="0" width="152" height="20" uuid="ad96edbd-4c40-45e4-ab8e-dea8c1738c11"/>
+			</rectangle>
+			<textField>
+				<reportElement x="19" y="0" width="152" height="20" uuid="85871297-a59b-4f7f-be5f-b680bf2c02b0"/>
+				<textFieldExpression><![CDATA[$F{nama}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="171" y="0" width="152" height="20" uuid="fc251e46-7156-44af-9fdb-ca00e0107987"/>
+			</rectangle>
+			<textField>
+				<reportElement x="171" y="0" width="152" height="20" uuid="72170451-04c0-4b9a-b087-7896453e0f76"/>
+				<textFieldExpression><![CDATA[$F{jenis}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="323" y="0" width="166" height="20" uuid="f49e6c8c-c8c7-4bdd-8504-9a75a3b43b84"/>
+			</rectangle>
+			<textField>
+				<reportElement x="323" y="0" width="166" height="20" uuid="324347c6-5e3f-4d59-8127-4141052d6d59"/>
+				<textFieldExpression><![CDATA[$F{stok}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

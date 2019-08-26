@@ -49,6 +49,8 @@ public class Cetak extends javax.swing.JFrame {
         akhir = new com.toedter.calendar.JDateChooser();
         jPanel1 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cetak Laporan");
@@ -60,7 +62,7 @@ public class Cetak extends javax.swing.JFrame {
 
         jLabel1.setText("Dari Tanggal");
 
-        jButton1.setText("Cetak");
+        jButton1.setText("Obat Masuk");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -95,6 +97,20 @@ public class Cetak extends javax.swing.JFrame {
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
+        jButton2.setText("Obat Keluar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Stok Obat");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -104,17 +120,19 @@ public class Cetak extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(163, 163, 163)
-                        .addComponent(jButton1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(27, 27, 27)
                         .addComponent(awal, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(12, 12, 12)
-                        .addComponent(akhir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(akhir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(70, 70, 70)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton3)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -130,8 +148,11 @@ public class Cetak extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(akhir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -148,8 +169,8 @@ public class Cetak extends javax.swing.JFrame {
         try{
             Config objkoneksi = new Config();
             Connection con = objkoneksi.bukakoneksi();
-            String fileName="src/main/java/test/test/Reports/laporan.jrxml";
-            String filetoFill="src/main/java/test/test/Reports/laporan.jasper";
+            String fileName="src/main/java/test/test/Reports/masuk.jrxml";
+            String filetoFill="src/main/java/test/test/Reports/masuk.jasper";
             JasperCompileManager.compileReport(fileName);
             
             Map param= new HashMap();
@@ -173,6 +194,55 @@ public class Cetak extends javax.swing.JFrame {
             System.out.println(ex.toString());
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try{
+            Config objkoneksi = new Config();
+            Connection con = objkoneksi.bukakoneksi();
+            String fileName="src/main/java/test/test/Reports/keluar.jrxml";
+            String filetoFill="src/main/java/test/test/Reports/keluar.jasper";
+            JasperCompileManager.compileReport(fileName);
+            
+            Map param= new HashMap();
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String Dawal = dateFormat.format(awal.getDate());
+            String Dakhir = dateFormat.format(akhir.getDate());
+            param.put("tggl_a", Dawal);
+            param.put("tggl_b", Dakhir);
+            
+            dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            Dawal = dateFormat.format(awal.getDate());
+            Dakhir = dateFormat.format(akhir.getDate());
+            param.put("txt_tggl_a", Dawal);
+            param.put("txt_tggl_b", Dakhir);
+            
+            JasperFillManager.fillReport(filetoFill, param, con);
+            JasperPrint jp=JasperFillManager.fillReport(filetoFill, param,con);
+            JasperViewer.viewReport(jp,false);
+
+        }catch(Exception ex){
+            System.out.println(ex.toString());
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        try{
+            Config objkoneksi = new Config();
+            Connection con = objkoneksi.bukakoneksi();
+            String fileName="src/main/java/test/test/Reports/obat.jrxml";
+            String filetoFill="src/main/java/test/test/Reports/obat.jasper";
+            JasperCompileManager.compileReport(fileName);
+            
+            Map param= new HashMap();
+            
+            JasperFillManager.fillReport(filetoFill, param, con);
+            JasperPrint jp=JasperFillManager.fillReport(filetoFill, param,con);
+            JasperViewer.viewReport(jp,false);
+
+        }catch(Exception ex){
+            System.out.println(ex.toString());
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -216,6 +286,8 @@ public class Cetak extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser akhir;
     private com.toedter.calendar.JDateChooser awal;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel7;
