@@ -3,7 +3,7 @@
 -- Host: 127.0.0.1	Database: dhea
 -- ------------------------------------------------------
 -- Server version 	5.5.5-10.3.16-MariaDB
--- Date: Mon, 26 Aug 2019 09:07:02 +0200
+-- Date: Mon, 26 Aug 2019 10:30:25 +0200
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -92,7 +92,7 @@ CREATE TABLE `masuk` (
   PRIMARY KEY (`id`),
   KEY `id_obat` (`id_obat`),
   CONSTRAINT `masuk_ibfk_1` FOREIGN KEY (`id_obat`) REFERENCES `obat` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,11 +102,12 @@ CREATE TABLE `masuk` (
 LOCK TABLES `masuk` WRITE;
 /*!40000 ALTER TABLE `masuk` DISABLE KEYS */;
 SET autocommit=0;
+INSERT INTO `masuk` VALUES (1,3,'2019-08-01',2,'mantap');
 /*!40000 ALTER TABLE `masuk` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `masuk` with 0 row(s)
+-- Dumped table `masuk` with 1 row(s)
 --
 
 --
@@ -121,7 +122,7 @@ CREATE TABLE `obat` (
   `jenis` varchar(191) NOT NULL,
   `stok` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -131,11 +132,12 @@ CREATE TABLE `obat` (
 LOCK TABLES `obat` WRITE;
 /*!40000 ALTER TABLE `obat` DISABLE KEYS */;
 SET autocommit=0;
+INSERT INTO `obat` VALUES (1,'Amoxilin','Antibodi',20),(3,'Paracetamol','Penurun Panas',30);
 /*!40000 ALTER TABLE `obat` ENABLE KEYS */;
 UNLOCK TABLES;
 COMMIT;
 
--- Dumped table `obat` with 0 row(s)
+-- Dumped table `obat` with 2 row(s)
 --
 
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -147,4 +149,4 @@ COMMIT;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on: Mon, 26 Aug 2019 09:07:02 +0200
+-- Dump completed on: Mon, 26 Aug 2019 10:30:25 +0200

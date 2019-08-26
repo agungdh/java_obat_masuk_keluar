@@ -8,6 +8,8 @@ package test.test.Forms;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.sql.Connection;
@@ -43,6 +45,7 @@ import test.test.Models.JabatanModel;
 
 import test.test.Models.GajiModel;
 import test.test.Models.KaryawanModel;
+import test.test.Models.MasukModel;
 import test.test.Models.ObatModel;
 import test.test.Reports.Config;
 
@@ -51,6 +54,10 @@ import test.test.Reports.Config;
  * @author user
  */
 public class Masuk extends javax.swing.JFrame {
+    private List<Integer> comboObatID = new ArrayList<Integer>();
+    private int comboObatIndex;
+    private int selectedComboObatIndex;
+    
     private DefaultTableModel model = new DefaultTableModel();
     private String ID;
     private String state;
@@ -77,7 +84,46 @@ public class Masuk extends javax.swing.JFrame {
             }
         });
         
+        loadComboBox();
+        
+        selectKode();
+        
+        Obat.addActionListener (new ActionListener () {
+            public void actionPerformed(ActionEvent e) {
+                selectKode();
+            }
+        });
+        
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+    }
+    
+    public void selectKode() {
+        comboObatIndex = Obat.getSelectedIndex();
+        if (comboObatIndex >= 0) {
+            selectedComboObatIndex = comboObatID.get(comboObatIndex);
+
+            Base.open();
+            ObatModel p = ObatModel.findById(selectedComboObatIndex);
+            Base.close();
+
+            Nama.setText(p.getString("nama"));
+            Jenis.setText(p.getString("jenis"));
+            Stok.setText(p.getString("stok"));
+        }
+    }
+    
+    public void loadComboBox() {
+        Obat.removeAllItems();
+        
+        Base.open();
+        LazyList<ObatModel> obats = ObatModel.findAll();
+        
+        for(ObatModel obat : obats) {
+            comboObatID.add(Integer.parseInt(obat.getString("id")));
+            Obat.addItem(obat.getString("nama"));
+        }
+
+        Base.close();
     }
     
     public void cari() {
@@ -88,23 +134,28 @@ public class Masuk extends javax.swing.JFrame {
         }
     }
     
-    private void loadTableHelper(LazyList<ObatModel> obats) {
+    private void loadTableHelper(LazyList<MasukModel> masuks) {
         model = new DefaultTableModel();
                 
         model.addColumn("#ID");
         model.addColumn("Nama Obat");
         model.addColumn("Jenis Obat");
-        model.addColumn("Stok Obat");
+        model.addColumn("Tanggal Masuk");
+        model.addColumn("Jumlah Obat");
+        model.addColumn("Keterangan");
         
         Base.open();
         
         try {
-            for(ObatModel obat : obats) {                
+            for(MasukModel masuk : masuks) {                
+                ObatModel obat = masuk.parent(ObatModel.class);                
                 model.addRow(new Object[]{
-                    obat.getId(),
+                    masuk.getId(),
                     obat.getString("nama"),
                     obat.getString("jenis"),
-                    obat.getString("stok"),
+                    ADHhelper.tanggalIndo(masuk.getString("tanggal")),
+                    masuk.getString("jumlah"),
+                    masuk.getString("keterangan")
                 });
             }
         } catch (Exception e) {
@@ -123,26 +174,26 @@ public class Masuk extends javax.swing.JFrame {
     
     private void loadTable() {
         Base.open();
-        LazyList<ObatModel> obats = ObatModel.findAll();
+        LazyList<MasukModel> masuks = MasukModel.findAll();
         Base.close();
         
-        loadTableHelper(obats);
+        loadTableHelper(masuks);
     }
 
     private void loadTable(String cari) {
         Base.open();
-        LazyList<ObatModel> obats = ObatModel.where("nama like ? OR jenis like ?", '%' + cari + '%', '%' + cari + '%');
+        LazyList<MasukModel> masuks = MasukModel.findBySQL("SELECT m.*, o.nama, o.jenis, o.stok FROM obat o, masuk m WHERE m.id_obat = o.id AND (o.nama like ? OR o.jenis like ?)", '%' + cari + '%', '%' + cari + '%');
         Base.close();
         
-        loadTableHelper(obats);
+        loadTableHelper(masuks);
     }
 
     
     private void hapusData() {
         Base.open();
-        ObatModel pembiayaa = ObatModel.findById(ID);
+        MasukModel masuk = MasukModel.findById(ID);
         try {
-            pembiayaa.delete();
+            masuk.delete();
         } catch (DBException e) {
             JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
         }
@@ -168,11 +219,12 @@ public class Masuk extends javax.swing.JFrame {
     private void tambahData() {
         Base.open();
         try {
-            ObatModel obat = new ObatModel();
-            obat.set("nama", Nama.getText());
-            obat.set("jenis", Jenis.getText());
-            obat.set("stok", Stok.getValue());
-            obat.save();
+            MasukModel masuk = new MasukModel();
+            masuk.set("id_obat", selectedComboObatIndex);
+            masuk.set("tanggal", ADHhelper.parseTanggal(Tanggal.getDate()));
+            masuk.set("jumlah", Jumlah.getValue());
+            masuk.set("keterangan", Keterangan.getText());
+            masuk.save();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
@@ -182,11 +234,12 @@ public class Masuk extends javax.swing.JFrame {
     private void ubahData() {
         Base.open();
         try {
-            ObatModel obat = ObatModel.findById(ID);
-            obat.set("nama", Nama.getText());
-            obat.set("jenis", Jenis.getText());
-            obat.set("stok", Stok.getValue());
-            obat.save();
+            MasukModel masuk = MasukModel.findById(ID);
+            masuk.set("id_obat", selectedComboObatIndex);
+            masuk.set("tanggal", ADHhelper.parseTanggal(Tanggal.getDate()));
+            masuk.set("jumlah", Jumlah.getValue());
+            masuk.set("keterangan", Keterangan.getText());
+            masuk.save();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
@@ -194,9 +247,10 @@ public class Masuk extends javax.swing.JFrame {
     }
 
     private void resetForm() {
-        Nama.setText("");
-        Jenis.setText("");
-        Stok.setValue(0);
+        Obat.setSelectedIndex(0);
+        Tanggal.setDate(null);
+        Jumlah.setValue(0);
+        Keterangan.setText("");
     }
 
     /**
@@ -227,6 +281,13 @@ public class Masuk extends javax.swing.JFrame {
         Obat = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        Tanggal = new com.toedter.calendar.JDateChooser();
+        Jumlah = new javax.swing.JSpinner();
+        Keterangan = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Obat");
@@ -271,7 +332,7 @@ public class Masuk extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(315, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(298, 298, 298))
         );
@@ -313,11 +374,11 @@ public class Masuk extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(ButtonTambahUbah)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(47, 47, 47)
                 .addComponent(ButtonRefresh)
-                .addGap(18, 18, 18)
+                .addGap(36, 36, 36)
                 .addComponent(ButtonResetHapus)
-                .addGap(55, 55, 55))
+                .addGap(23, 23, 23))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -399,6 +460,49 @@ public class Masuk extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel6.setText("Tanggal Masuk");
+
+        jLabel7.setText("Jumlah Obat Masuk");
+
+        jLabel8.setText("Keterangan");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Tanggal, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                    .addComponent(Jumlah)
+                    .addComponent(Keterangan))
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addComponent(Tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(Jumlah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(Keterangan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -415,7 +519,8 @@ public class Masuk extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(101, 101, 101)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -424,8 +529,10 @@ public class Masuk extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(13, 13, 13)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -460,9 +567,15 @@ public class Masuk extends javax.swing.JFrame {
             ObatModel obat = ObatModel.findById(ID);
             Base.close();
 
-            Nama.setText(obat.getString("nama"));
-            Jenis.setText(obat.getString("jenis"));
-            Stok.setValue(obat.getInteger("stok"));
+            Obat.setSelectedIndex(comboObatID.indexOf(Integer.parseInt(obat.getString("id_obat"))));
+            try {
+                Tanggal.setDate(ADHhelper.getTanggalFromDB(obat.getString("tanggal")));
+            } catch (ParseException ex) {
+                Logger.getLogger(Angsuran.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            Jumlah.setValue(obat.getInteger("jumlah"));
+            Keterangan.setText(obat.getString("keterangan"));
+            
             setState("edit");
         }
     }//GEN-LAST:event_TablePegawaiMouseClicked
@@ -509,9 +622,9 @@ public class Masuk extends javax.swing.JFrame {
     }//GEN-LAST:event_ObatItemStateChanged
 
     private void ObatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ObatActionPerformed
-        comboKaryawanIndex = Obat.getSelectedIndex();
-        if (comboKaryawanIndex >= 0) {
-            selectedComboKaryawanIndex = comboKaryawanID.get(comboKaryawanIndex);
+        comboObatIndex = Obat.getSelectedIndex();
+        if (comboObatIndex >= 0) {
+            selectedComboObatIndex = comboObatID.get(comboObatIndex);
         }
     }//GEN-LAST:event_ObatActionPerformed
 
@@ -682,20 +795,27 @@ public class Masuk extends javax.swing.JFrame {
     private javax.swing.JButton ButtonResetHapus;
     private javax.swing.JButton ButtonTambahUbah;
     private javax.swing.JTextField Jenis;
+    private javax.swing.JSpinner Jumlah;
+    private javax.swing.JTextField Keterangan;
     private javax.swing.JLabel LabelCari;
     private javax.swing.JTextField Nama;
     private javax.swing.JComboBox<String> Obat;
     private javax.swing.JScrollPane ScrollPane;
     private javax.swing.JTextField Stok;
     private javax.swing.JTable TablePegawai;
+    private com.toedter.calendar.JDateChooser Tanggal;
     private javax.swing.JTextField TextCari;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     // End of variables declaration//GEN-END:variables
 }
