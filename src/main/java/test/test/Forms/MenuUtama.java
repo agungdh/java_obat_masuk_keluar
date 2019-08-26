@@ -20,7 +20,7 @@ public class MenuUtama extends javax.swing.JFrame {
     public MenuUtama() {
         initComponents();
         
-        String path = "src/main/resources/assets/14590417_1087286434688799_5608104638337445639_n.jpg";
+        String path = "src/main/resources/assets/puskas simbarwaringin.png";
         ImageIcon MyImage = new ImageIcon(path);
         Image img = MyImage.getImage();
         Image newImg = img.getScaledInstance(Gambar.getWidth(), Gambar.getHeight(), Image.SCALE_SMOOTH);
