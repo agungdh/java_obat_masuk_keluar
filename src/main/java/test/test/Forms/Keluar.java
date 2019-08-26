@@ -45,6 +45,7 @@ import test.test.Models.JabatanModel;
 
 import test.test.Models.GajiModel;
 import test.test.Models.KaryawanModel;
+import test.test.Models.KeluarModel;
 import test.test.Models.MasukModel;
 import test.test.Models.ObatModel;
 import test.test.Reports.Config;
@@ -134,28 +135,28 @@ public class Keluar extends javax.swing.JFrame {
         }
     }
     
-    private void loadTableHelper(LazyList<MasukModel> masuks) {
+    private void loadTableHelper(LazyList<KeluarModel> keluars) {
         model = new DefaultTableModel();
                 
         model.addColumn("#ID");
         model.addColumn("Nama Obat");
         model.addColumn("Jenis Obat");
-        model.addColumn("Tanggal Masuk");
+        model.addColumn("Tanggal Keluar");
         model.addColumn("Jumlah Obat");
         model.addColumn("Keterangan");
         
         Base.open();
         
         try {
-            for(MasukModel masuk : masuks) {                
-                ObatModel obat = masuk.parent(ObatModel.class);                
+            for(KeluarModel keluar : keluars) {                
+                ObatModel obat = keluar.parent(ObatModel.class);                
                 model.addRow(new Object[]{
-                    masuk.getId(),
+                    keluar.getId(),
                     obat.getString("nama"),
                     obat.getString("jenis"),
-                    ADHhelper.tanggalIndo(masuk.getString("tanggal")),
-                    masuk.getString("jumlah"),
-                    masuk.getString("keterangan")
+                    ADHhelper.tanggalIndo(keluar.getString("tanggal")),
+                    keluar.getString("jumlah"),
+                    keluar.getString("keterangan")
                 });
             }
         } catch (Exception e) {
@@ -174,27 +175,27 @@ public class Keluar extends javax.swing.JFrame {
     
     private void loadTable() {
         Base.open();
-        LazyList<MasukModel> masuks = MasukModel.findAll();
+        LazyList<KeluarModel> keluars = KeluarModel.findAll();
         Base.close();
         
-        loadTableHelper(masuks);
+        loadTableHelper(keluars);
     }
 
     private void loadTable(String cari) {
         Base.open();
-        LazyList<MasukModel> masuks = MasukModel.findBySQL("SELECT m.*, o.nama, o.jenis, o.stok FROM obat o, masuk m WHERE m.id_obat = o.id AND (o.nama like ? OR o.jenis like ?)", '%' + cari + '%', '%' + cari + '%');
+        LazyList<KeluarModel> keluars = KeluarModel.findBySQL("SELECT m.*, o.nama, o.jenis, o.stok FROM obat o, keluar m WHERE m.id_obat = o.id AND (o.nama like ? OR o.jenis like ?)", '%' + cari + '%', '%' + cari + '%');
         Base.close();
         
-        loadTableHelper(masuks);
+        loadTableHelper(keluars);
     }
 
     
     private void hapusData() {
         Base.open();
         
-        MasukModel masuk = MasukModel.findById(ID);
+        KeluarModel masuk = KeluarModel.findById(ID);
         ObatModel obat = masuk.parent(ObatModel.class);
-        obat.set("stok", obat.getInteger("stok") - masuk.getInteger("jumlah"));
+        obat.set("stok", obat.getInteger("stok") + masuk.getInteger("jumlah"));
         obat.save();
         
         try {
@@ -224,7 +225,7 @@ public class Keluar extends javax.swing.JFrame {
     private void tambahData() {
         Base.open();
         try {
-            MasukModel masuk = new MasukModel();
+            KeluarModel masuk = new KeluarModel();
             masuk.set("id_obat", selectedComboObatIndex);
             masuk.set("tanggal", ADHhelper.parseTanggal(Tanggal.getDate()));
             masuk.set("jumlah", Jumlah.getValue());
@@ -232,7 +233,7 @@ public class Keluar extends javax.swing.JFrame {
             masuk.save();
             
             ObatModel obat = ObatModel.findById(selectedComboObatIndex);
-            obat.set("stok", obat.getInteger("stok") + (int) Jumlah.getValue());
+            obat.set("stok", obat.getInteger("stok") - (int) Jumlah.getValue());
             obat.save();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -243,9 +244,9 @@ public class Keluar extends javax.swing.JFrame {
     private void ubahData() {
         Base.open();
         try {
-            MasukModel masuk = MasukModel.findById(ID);
+            KeluarModel masuk = KeluarModel.findById(ID);
             ObatModel obat = ObatModel.findById(selectedComboObatIndex);
-            obat.set("stok", obat.getInteger("stok") - masuk.getInteger("jumlah"));
+            obat.set("stok", obat.getInteger("stok") + masuk.getInteger("jumlah"));
             obat.save();
             
             masuk.set("id_obat", selectedComboObatIndex);
@@ -254,7 +255,7 @@ public class Keluar extends javax.swing.JFrame {
             masuk.set("keterangan", Keterangan.getText());
             masuk.save();
             
-            obat.set("stok", obat.getInteger("stok") + (int) Jumlah.getValue());
+            obat.set("stok", obat.getInteger("stok") - (int) Jumlah.getValue());
             obat.save();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -306,7 +307,7 @@ public class Keluar extends javax.swing.JFrame {
         Keterangan = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Obat Masuk");
+        setTitle("Obat Keluar");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -341,7 +342,7 @@ public class Keluar extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setText("OBAT MASUK");
+        jLabel1.setText("OBAT KELUAR");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -478,9 +479,9 @@ public class Keluar extends javax.swing.JFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel6.setText("Tanggal Masuk");
+        jLabel6.setText("Tanggal Keluar");
 
-        jLabel7.setText("Jumlah Obat Masuk");
+        jLabel7.setText("Jumlah Obat Keluar");
 
         jLabel8.setText("Keterangan");
 
@@ -582,7 +583,7 @@ public class Keluar extends javax.swing.JFrame {
             ID = model.getValueAt(i, 0).toString();
 
             Base.open();
-            MasukModel masuk = MasukModel.findById(ID);
+            KeluarModel masuk = KeluarModel.findById(ID);
             Base.close();
 
             Obat.setSelectedIndex(comboObatID.indexOf(Integer.parseInt(masuk.getString("id_obat"))));
@@ -600,20 +601,20 @@ public class Keluar extends javax.swing.JFrame {
 
     private void ButtonTambahUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonTambahUbahActionPerformed
         if (state.equals("index")) {
-            if (Nama.getText().trim().equals("")) {
-                JOptionPane.showMessageDialog(null, "Form Nama Obat Masih Kosong !!!");
-            } else if (Jenis.getText().trim().equals("")) {
-                JOptionPane.showMessageDialog(null, "Form Jenis Obat Masih Kosong !!!");
+            if (Keterangan.getText().trim().equals("")) {
+                JOptionPane.showMessageDialog(null, "Form Keterangan Masih Kosong !!!");
+            } else if (Tanggal.getDate() == null) {
+                JOptionPane.showMessageDialog(null, "Form Tanggal Masih Kosong !!!");
             } else {
                 tambahData();
                 resetForm();
                 loadTable();
             }
         } else {
-            if (Nama.getText().trim().equals("")) {
-                JOptionPane.showMessageDialog(null, "Form Nama Obat Pembiayaan Masih Kosong !!!");
-            } else if (Jenis.getText().trim().equals("")) {
-                JOptionPane.showMessageDialog(null, "Form Jenis Obat Masih Kosong !!!");
+            if (Keterangan.getText().trim().equals("")) {
+                JOptionPane.showMessageDialog(null, "Form Keterangan Masih Kosong !!!");
+            } else if (Tanggal.getDate() == null) {
+                JOptionPane.showMessageDialog(null, "Form Tanggal Masih Kosong !!!");
             } else {
                 ubahData();
                 resetForm();
