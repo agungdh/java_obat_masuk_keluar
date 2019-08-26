@@ -157,7 +157,7 @@ public class MenuUtama extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        new Angsuran().setVisible(true);
+        new Masuk().setVisible(true);
         
         this.dispose();
     }//GEN-LAST:event_jButton7ActionPerformed
