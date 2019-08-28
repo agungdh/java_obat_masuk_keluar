@@ -41,10 +41,6 @@ import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.DBException;
 import org.javalite.activejdbc.LazyList;
 import test.test.Helpers.ADHhelper;
-import test.test.Models.JabatanModel;
-
-import test.test.Models.GajiModel;
-import test.test.Models.KaryawanModel;
 import test.test.Models.MasukModel;
 import test.test.Models.ObatModel;
 import test.test.Reports.Config;
@@ -589,7 +585,7 @@ public class Masuk extends javax.swing.JFrame {
             try {
                 Tanggal.setDate(ADHhelper.getTanggalFromDB(masuk.getString("tanggal")));
             } catch (ParseException ex) {
-                Logger.getLogger(Angsuran.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Masuk.class.getName()).log(Level.SEVERE, null, ex);
             }
             Jumlah.setValue(masuk.getInteger("jumlah"));
             Keterangan.setText(masuk.getString("keterangan"));

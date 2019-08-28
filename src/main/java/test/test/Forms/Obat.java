@@ -39,10 +39,6 @@ import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.DBException;
 import org.javalite.activejdbc.LazyList;
 import test.test.Helpers.ADHhelper;
-import test.test.Models.JabatanModel;
-
-import test.test.Models.GajiModel;
-import test.test.Models.KaryawanModel;
 import test.test.Models.ObatModel;
 import test.test.Reports.Config;
 
