@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="laporan" language="groovy" pageWidth="586" pageHeight="595" orientation="Landscape" columnWidth="546" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="83af2b50-318f-4f0b-be55-db83171c0f1e">
-	<property name="ireport.zoom" value="1.4641000000000022"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="laporan" language="groovy" pageWidth="586" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="546" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="83af2b50-318f-4f0b-be55-db83171c0f1e">
+	<property name="ireport.zoom" value="1.1000000000000025"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="txt_tggl_a" class="java.lang.String"/>
@@ -45,22 +45,57 @@ ORDER BY m.tanggal ASC]]>
 	</field>
 	<field name="tanggalparsed" class="java.lang.String"/>
 	<title>
-		<band height="53" splitType="Stretch">
+		<band height="192" splitType="Stretch">
 			<staticText>
-				<reportElement x="211" y="0" width="173" height="20" uuid="56d37945-411e-4707-9be9-1010d22bf216"/>
+				<reportElement x="197" y="151" width="173" height="20" uuid="56d37945-411e-4707-9be9-1010d22bf216"/>
 				<textElement>
 					<font size="13" isBold="true"/>
 				</textElement>
 				<text><![CDATA[LAPORAN OBAT KELUAR]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="33" width="46" height="20" uuid="ff7548c6-1e81-49e6-a00c-97ab3d495369"/>
+				<reportElement x="0" y="171" width="46" height="20" uuid="ff7548c6-1e81-49e6-a00c-97ab3d495369"/>
 				<text><![CDATA[Tanggal :]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="46" y="33" width="238" height="20" uuid="2aee80f5-ea8a-418e-a995-97483972a18f"/>
+				<reportElement x="46" y="171" width="238" height="20" uuid="2aee80f5-ea8a-418e-a995-97483972a18f"/>
 				<textFieldExpression><![CDATA[$P{txt_tggl_a} + " - " + $P{txt_tggl_b}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="172" y="0" width="230" height="20" uuid="8f86fb53-4a52-4942-8bda-3e5599bedebf"/>
+				<text><![CDATA[PEMERINTAH KABUPATEN LAMPUNG TENGAH]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="234" y="20" width="100" height="20" uuid="73b4e55d-b69f-44d2-9ef3-5d65fe503990"/>
+				<text><![CDATA[DINAS KESEHATAN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="188" y="40" width="191" height="20" uuid="3d9ccaac-6a73-4b76-b582-adcbb2ea1514"/>
+				<text><![CDATA[UPTD PUSKESMAS SIMBARWARINGIN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="147" y="60" width="283" height="20" uuid="c8645e58-86d5-49cc-8931-c4bad9e9c428"/>
+				<text><![CDATA[Jl. Raya Simbarwaringin, Kec. Trimurjo, Kab Lampung Tengah]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="80" width="300" height="20" uuid="34c15eb7-260c-4be6-a328-8f37ac05f4cf"/>
+				<text><![CDATA[No. Hp : 081369435634 e-mail : pkm.simbarwaringin@gmail.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="248" y="100" width="86" height="20" uuid="ce3e53de-3ffc-49e8-973f-b40f59bbb9c5"/>
+				<text><![CDATA[Kode Pos : 34172]]></text>
+			</staticText>
+			<image>
+				<reportElement x="15" y="10" width="84" height="70" uuid="cc3babbb-fefc-4c32-8dd7-6d9542aa9fa6"/>
+				<imageExpression><![CDATA["LOGO_KABUPATEN_LAMPUNG_TENGAH.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="456" y="10" width="76" height="70" uuid="aa78a841-f032-400a-952b-3fe5042999d7"/>
+				<imageExpression><![CDATA["puskesmas-regency-bengkulu-health-logo-health.jpg"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="129" y="129" width="100" height="1" uuid="17c73018-8c88-45cb-8f15-8b0ccb4fb43e"/>
+			</line>
 		</band>
 	</title>
 	<columnHeader>
